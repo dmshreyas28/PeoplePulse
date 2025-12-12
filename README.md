@@ -5,9 +5,8 @@
 PeoplePulse is a production-grade, full-stack AI platform that predicts employee attrition risk, explains predictions using SHAP, and provides actionable retention recommendations for HR teams.
 
 ![Tech Stack](https://img.shields.io/badge/Python-3.10+-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green)
-![React](https://img.shields.io/badge/React-18.2-blue)
-![Docker](https://img.shields.io/badge/Docker-Ready-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.124-green)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.52-red)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ## 🌟 Features
@@ -24,30 +23,27 @@ PeoplePulse is a production-grade, full-stack AI platform that predicts employee
 ## 🏗️ Architecture
 
 ```
-┌─────────────────┐      ┌──────────────────┐      ┌─────────────────┐
-│                 │      │                  │      │                 │
-│  React Frontend │◄────►│  FastAPI Backend │◄────►│   PostgreSQL    │
-│   (Dashboard)   │      │   (REST API)     │      │    Database     │
-│                 │      │                  │      │                 │
-└─────────────────┘      └──────────────────┘      └─────────────────┘
-                                  │
-                                  ▼
-                         ┌──────────────────┐
-                         │                  │
-                         │  ML Pipeline     │
-                         │  XGBoost + SHAP  │
-                         │  MLflow Tracking │
-                         │                  │
-                         └──────────────────┘
+┌──────────────────┐      ┌──────────────────┐      ┌─────────────────┐
+│                  │      │                  │      │                 │
+│  Streamlit UI    │◄────►│  FastAPI Backend │◄────►│   SQLite DB     │
+│  (Dashboard)     │      │   (REST API)     │      │   (Local Dev)   │
+│                  │      │                  │      │                 │
+└──────────────────┘      └──────────────────┘      └─────────────────┘
+                                   │
+                                   ▼
+                          ┌──────────────────┐
+                          │                  │
+                          │  ML Pipeline     │
+                          │  XGBoost + SHAP  │
+                          │                  │
+                          └──────────────────┘
 ```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Docker & Docker Compose
 - Python 3.10+
-- Node.js 18+
 - Git
 
 ### 1. Clone the Repository
@@ -57,49 +53,47 @@ git clone https://github.com/yourusername/peoplepulse.git
 cd peoplepulse
 ```
 
-### 2. Start the Platform (Docker)
-
-**Windows (PowerShell):**
-```powershell
-.\infra\start.ps1
-```
-
-**Linux/Mac:**
-```bash
-chmod +x infra/start.sh
-./infra/start.sh
-```
-
-**Or manually:**
-```bash
-cd infra
-docker-compose up --build
-```
-
-### 3. Train the ML Model
+### 2. Setup Virtual Environment
 
 ```bash
-# Create Python virtual environment
-cd ml
+# Create virtual environment
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-# Install dependencies
-pip install -r requirements.txt
+# Activate virtual environment
+# Windows:
+.venv\Scripts\activate
+# Linux/Mac:
+source .venv/bin/activate
 
-# Train the model
-python pipeline/train.py --config pipeline/config.yaml
+# Install all dependencies
+pip install fastapi uvicorn pydantic pydantic-settings sqlalchemy python-dotenv python-multipart joblib xgboost scikit-learn==1.4.0 shap imbalanced-learn streamlit plotly requests
 ```
 
-The trained model will be saved to `ml/models/model.pkl` (the single source of truth) and automatically loaded by the backend.
+### 3. Start the Application
+
+**Option 1: Use start.bat (Windows)**
+```bash
+start.bat
+```
+
+**Option 2: Manual Start**
+
+```bash
+# Terminal 1 - Backend
+set DATABASE_URL=sqlite:///./test.db
+set MODEL_PATH=ml\models\model.pkl  
+set PYTHONPATH=backend;ml\pipeline
+python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
+
+# Terminal 2 - Streamlit Frontend
+streamlit run streamlit_app.py --server.port 8501
+```
 
 ### 4. Access the Platform
 
-- **Frontend Dashboard**: http://localhost:3000
+- **Streamlit Dashboard**: http://localhost:8501
 - **Backend API**: http://localhost:8000
 - **API Documentation**: http://localhost:8000/docs
-- **MLflow UI**: http://localhost:5000
-- **PgAdmin**: http://localhost:5050
 
 ## 📁 Project Structure
 
