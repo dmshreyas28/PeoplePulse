@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     
     database_url: str = "postgresql://postgres:postgres@localhost:5432/peoplepulse"
     secret_key: str = "change-this-secret-key"
-    model_path: str = "./models/model.pkl"
+    model_path: str = "../ml/models/model.pkl"
     mlflow_tracking_uri: str = "http://localhost:5000"
     debug: bool = True
     

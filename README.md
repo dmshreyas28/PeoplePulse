@@ -91,7 +91,7 @@ pip install -r requirements.txt
 python pipeline/train.py --config pipeline/config.yaml
 ```
 
-The trained model will be saved to `ml/models/model.pkl` and automatically loaded by the backend.
+The trained model will be saved to `ml/models/model.pkl` (the single source of truth) and automatically loaded by the backend.
 
 ### 4. Access the Platform
 

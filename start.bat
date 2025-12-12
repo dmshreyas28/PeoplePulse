@@ -6,7 +6,7 @@ echo.
 
 REM Start Backend
 echo [1/2] Starting Backend Server...
-start "PeoplePulse Backend" cmd /k "cd /d E:\PeoplePulse && set DATABASE_URL=sqlite:///./test.db && set MODEL_PATH=e:\PeoplePulse\backend\models\model.pkl && set PYTHONPATH=e:\PeoplePulse\backend;e:\PeoplePulse\ml\pipeline && E:\PeoplePulse\ml\.venv\Scripts\python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000"
+start "PeoplePulse Backend" cmd /k "cd /d E:\PeoplePulse && set DATABASE_URL=sqlite:///./test.db && set MODEL_PATH=e:\PeoplePulse\ml\models\model.pkl && set PYTHONPATH=e:\PeoplePulse\backend;e:\PeoplePulse\ml\pipeline && E:\PeoplePulse\ml\.venv\Scripts\python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000"
 timeout /t 5 /nobreak >nul
 
 REM Start Frontend
