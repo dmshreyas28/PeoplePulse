@@ -1,0 +1,69 @@
+# ML Pipeline Configuration
+
+data:
+  raw_path: "../data/raw/WA_Fn-UseC_-HR-Employee-Attrition.csv"  # IBM Kaggle dataset
+  processed_path: "../data/processed/"
+  
+preprocessing:
+  test_size: 0.2
+  random_state: 42
+  handle_imbalance: true  # Re-enabled for larger dataset
+  sampling_strategy: "SMOTE"
+  
+features:
+  numeric:
+    - Age
+    - MonthlyIncome
+    - YearsAtCompany
+    - YearsInCurrentRole
+    - YearsSinceLastPromotion
+    - YearsWithCurrManager
+    - NumCompaniesWorked
+    - PercentSalaryHike
+    - StockOptionLevel
+    - TrainingTimesLastYear
+    - DistanceFromHome
+    - TotalWorkingYears
+    - JobLevel
+    
+  categorical:
+    - Gender
+    - Department
+    - JobRole
+    - EducationField
+    - BusinessTravel
+    - MaritalStatus
+    - OverTime
+    
+  ordinal:
+    - Education
+    - JobSatisfaction
+    - WorkLifeBalance
+    - EnvironmentSatisfaction
+    - RelationshipSatisfaction
+    - PerformanceRating
+
+model:
+  algorithm: "xgboost"  # Options: xgboost, lightgbm, random_forest
+  hyperparameters:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    min_child_weight: 1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+    
+training:
+  cv_folds: 5
+  early_stopping_rounds: 10
+  eval_metric: "auc"
+  use_mlflow: false
+  
+output:
+  model_path: "./models/model.pkl"
+  metrics_path: "./models/metrics.json"
+  
+mlflow:
+  experiment_name: "peoplepulse_attrition"
+  tracking_uri: "http://localhost:5000"

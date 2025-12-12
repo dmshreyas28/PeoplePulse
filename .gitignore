@@ -1,0 +1,84 @@
+# Root gitignore for PeoplePulse
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+env/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# ML Models & Data
+*.pkl
+*.h5
+*.joblib
+data/raw/*.csv
+!data/raw/hr_attrition.csv
+data/processed/*
+!data/processed/README.md
+ml/models/*.pkl
+!ml/models/.gitkeep
+mlruns/
+mlflow.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+frontend/dist/
+frontend/build/
+
+# Docker
+*.pid
+*.seed
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Secrets
+secrets/
+*.pem
+*.key
+*.crt
