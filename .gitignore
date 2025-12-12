@@ -37,6 +37,10 @@ mlflow.db
 .env.local
 .env.*.local
 
+# Database
+*.db
+test.db
+
 # IDEs
 .vscode/
 .idea/
