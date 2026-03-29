@@ -5,6 +5,7 @@ import json
 import mlflow
 import mlflow.xgboost
 import mlflow.lightgbm
+import mlflow.sklearn
 from pathlib import Path
 import pandas as pd
 import numpy as np
