@@ -36,6 +36,7 @@ services:
     volumes:
       - ../backend/app:/app/app
       - ../ml/models:/app/models
+      - ../ml/pipeline:/ml/pipeline
     depends_on:
       db:
         condition: service_healthy

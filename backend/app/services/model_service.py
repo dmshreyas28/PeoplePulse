@@ -1,4 +1,6 @@
 """ML model service for loading and prediction."""
+import os
+import sys
 import joblib
 import pandas as pd
 import numpy as np
@@ -33,7 +35,28 @@ class ModelService:
             if not self.model_path.exists():
                 logger.error(f"Model file not found at {self.model_path}")
                 return False
-                
+
+            # The saved model artifact includes the DataPreprocessor from ml/pipeline.
+            # Ensure ml/pipeline is on sys.path so joblib can deserialize it.
+            # Prefer the ML_PIPELINE_PATH environment variable; fall back to paths relative
+            # to the model file (works for both local development and Docker deployments
+            # where ml/pipeline is mounted at /ml/pipeline).
+            pipeline_candidates = [
+                # Docker / explicit mount: /ml/pipeline
+                Path('/ml/pipeline'),
+                # Local development: <project_root>/ml/pipeline
+                self.model_path.resolve().parent.parent / 'pipeline',
+            ]
+            extra_path = os.environ.get('ML_PIPELINE_PATH')
+            if extra_path:
+                pipeline_candidates.insert(0, Path(extra_path))
+
+            for pipeline_path in pipeline_candidates:
+                if pipeline_path.exists() and str(pipeline_path) not in sys.path:
+                    sys.path.insert(0, str(pipeline_path))
+                    logger.info(f"Added {pipeline_path} to sys.path for model deserialization")
+                    break
+
             model_artifacts = joblib.load(self.model_path)
             
             # Handle both dict format (with preprocessor) and direct model format

@@ -29,6 +29,7 @@ data/processed/*
 !data/processed/README.md
 ml/models/*.pkl
 !ml/models/.gitkeep
+!ml/models/model.pkl
 mlruns/
 mlflow.db
 

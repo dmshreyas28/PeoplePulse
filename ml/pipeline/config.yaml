@@ -1,7 +1,13 @@
 # ML Pipeline Configuration
 
 data:
-  raw_path: "../data/raw/WA_Fn-UseC_-HR-Employee-Attrition.csv"  # IBM Kaggle dataset
+  raw_path: "../data/raw/hr_attrition.csv"  # Sample dataset (500 employees).
+  # To use the full IBM HR Analytics dataset (1,470 employees, higher accuracy):
+  #   1. Download from: https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset
+  #   2. Place the file as: data/raw/WA_Fn-UseC_-HR-Employee-Attrition.csv
+  #   3. Update this path to: "../data/raw/WA_Fn-UseC_-HR-Employee-Attrition.csv"
+  #   4. Retrain: cd ml/pipeline && python train.py --config config.yaml
+  # Note: Both datasets share the same IBM HR column schema, so no schema changes are needed.
   processed_path: "../data/processed/"
   
 preprocessing:
